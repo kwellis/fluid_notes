@@ -1,0 +1,127 @@
+\documentclass{article}
+% \usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage[style=ieee, url=false]{biblatex}
+\usepackage{parskip} % adds a skipped paragraph
+\addbibresource{jpump.bib} %Import the bibliography file
+
+\newcommand\Mach{\mbox{\textit{Ma}}}  % Mach number
+\newcommand\Tee{\mbox{\textit{TEE}}}  % Throat Entry Equation
+
+\title{Sonic Velocity Notes}
+\author{Kaelin Ellis}
+\date{February 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\begin{equation}
+\frac{d\rho}{\rho} + \frac{dV}{V} + \frac{dA}{A} = 0
+\label{diff_mass}
+\end{equation}
+
+\begin{equation}
+\frac{dp}{\rho} + VdV = 0
+\label{energy_eqn}
+\end{equation}
+
+\begin{equation}
+dp = a^2d\rho
+\label{sonic_vel}
+\end{equation}
+
+Equation (\ref{diff_mass}) is the differential form of the conservation of mass equation. It states that the change in density, velocity and cross section area for a fluid need to equal to zero. Equation (\ref{energy_eqn}) is the energy equation. Stating the change in inverse density with pressure and velocity of the fluid must be zero. Equation (\ref{sonic_vel}) is a form of the sonic velocity equation. Where a is the speed of sound in the fluid. 
+
+Looking at the jet pump system and equations, the following alterations are provided. For equation (\ref{diff_mass}), the system evaluated has a constant area at the point of reference. (Need to verify this with Dr. Miracle). Equation (\ref{diff_mass}) is rewrote as equation (\ref{diff_mass_c_area}).
+
+\begin{equation}
+\frac{d\rho}{\rho} + \frac{dV}{V} = 0
+\label{diff_mass_c_area}
+\end{equation}
+
+Equation (\ref{energy_eqn}) is defined in the jet pump review as TEE, or the throat entry equation. It will be rewritten this way to provide clarity.
+
+\begin{equation}
+    \Tee = \frac{dp}{\rho} + VdV
+\label{tee}
+\end{equation}
+
+Substituting in equation (\ref{sonic_vel}) into equation (\ref{tee}) yields the following.
+
+\begin{equation}
+    \Tee = \frac{a^2d\rho}{\rho} + VdV
+\end{equation}
+
+\begin{equation}
+    \frac{\Tee}{a^2} = \frac{d\rho}{\rho} + \frac{V}{a^2}dV
+    \label{tee_sub}
+\end{equation}
+
+Multiplying the differential velocity term of equation (\ref{tee_sub}) by $\frac{V}{V}$ yields.
+
+\begin{equation}
+    \frac{\Tee}{a^2} = \frac{d\rho}{\rho} + \frac{V^2}{a^2}\frac{dV}{V}
+    \label{tee_sub2}
+\end{equation}
+
+Equation (\ref{diff_mass_c_area}) is rewritten as.
+
+\begin{equation}
+    \frac{dV}{V} = - \frac{d\rho}{\rho}
+\end{equation}
+
+It is recognized that in equation (\ref{tee_sub2}) that $\frac{V^2}{a^2}$ is the Mach number squared $\Mach^2$ and yields the following.
+
+\begin{equation}
+\frac{\Tee}{a^2} = \frac{d\rho}{\rho} - \Mach^2\frac{d\rho}{\rho}
+\label{tee_sub3} 
+\end{equation}
+
+Simplifying equation (\ref{tee_sub3}) yields the another form of the throat entry equation.
+
+\begin{equation}
+    \Tee = \frac{a^2d\rho}{\rho}(1 - \Mach^2)
+\label{tee_sub4}    
+\end{equation}
+
+Finally substituting back in the definition of the speed of sound $a^2 = \frac{dp}{d\rho}$ back into the equation (\ref{tee_sub4}) gives the final definition.
+
+\begin{equation}
+    \Tee = \frac{dp}{\rho}(1 - \Mach^2)
+\label{tee_final}    
+\end{equation}
+
+What is interesting to note, is the sign of the TEE equation swaps once the mach velocity is crossed. This appears to be seen in the plot of the throat entry graphs for the jet pumps. Note, what we really care about swapping signs is the slope of $\frac{d\Tee}{dp}$, I am not sure how we can perform the $d\Tee$ derivative?
+
+\begin{equation}
+\frac{\Tee}{dp} = \frac{1}{\rho}(1 - \Mach^2)
+\end{equation}
+
+Not that the Bob Merrill paper \cite{merrill} is the best indication of mathematical literacy. They do a derivation of what they believe $\frac{d\Tee}{dp}$ should look like. The idea is that if you take $dx$ by itself without any denominator, it is still $x$. So by following the Merrill logic, you get the following.
+
+\begin{equation}
+    \frac{d\Tee}{dp} = \frac{1}{\rho}(1 - \Mach^2)
+\end{equation}
+
+\section{Throat Entry Equation Clarification}
+
+I just had an interesting realization. What Bob Merrill has been defining as the "Throat Entry Equation" or $\Tee$ is an energy balance. Actually, I always realized that it was an energy balance, what I didn't realize or think about is that it was already a differential energy term. So really Tee is actually $dE_{te}$, since it is not an absolute energy term, but you are looking at the difference in energy between two different states. So writing the $\Tee$ actually looks like.
+
+\begin{equation}
+    dE_{te} = \frac{dp}{\rho} + VdV
+\end{equation}
+
+The biggest takeaway is that conservation of energy is a law of thermodynamics. As a result the only point of $dE_{te}$ that has any physical meaning is when it equals zero.
+
+Apparently, Bernoulli's equation is a classic momentum equation result, Newton's law for a frictionless, incompressible fluid. It may also be interpreted, however, as an idealized \emph{energy} relation! The changes represent reversible pressure work, kinetic energy and potential energy.
+
+\section{Bib Practice}
+
+What should really happen, is you should read \cite{cunn_gas} and then read \cite{cunn_break}. Cunningham's paper on gas compression with liquid jet provides the best derivations for the jet pump equations \cite{cunn_gas}. Those two papers are the fundamental papers to what is being accomplished. After reading those two papers, then move onto the two phase flow 1995 Cunningham paper \cite{cunn_two}. The other paper that is decent is by Robert Merrill. The paper is more modern than Cunningham. It deals with numerical methods \cite{merrill}. Another good paper is out of Czechia on sound of speed in fluid mixtures \cite{himr}. The paper by Petrie doesn't take into account the throat entry pressure \cite{petrie}. NASA put out a series of good papers with the help of Sanger that did an excellent job of mapping out jet pump pressure distribution \cite{sanger}.
+
+\printbibliography
+
+\end{document}

@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage{amssymb}
+\usepackage{nomencl, nicefrac}
+\newcommand\Mach{\mbox{\textit{Ma}}}  % Mach number
+\newcommand\Rey{\mbox{\textit{Re}}}  % Reynolds number
+\newcommand\Froude{\mbox{\textit{Fr}}}  % Froude number
+
+\makenomenclature
+
+%% This code creates the groups
+% -----------------------------------------
+\usepackage{etoolbox}
+\renewcommand\nomgroup[1]{%
+  \item[\bfseries
+  \ifstrequal{#1}{F}{Fluid Conditions}{%
+  \ifstrequal{#1}{S}{Subscripts}{%
+  \ifstrequal{#1}{M}{Mechanical Conditions}{%
+  \ifstrequal{#1}{D}{Dimensionless Numbers}}}}%
+]}
+% -----------------------------------------
+
+\begin{document}
+Eyyyy yooo! Do I need to double check that my equations are properly in psia vs psig / etc.? Maybe that is part of the problem with undercalculating the reservoir drawdown:
+
+\nomenclature[F]{\(c\)}{Speed of sound, $\nicefrac{ft}{s}$}
+\nomenclature[F]{\(V\)}{Velocity, $\nicefrac{ft}{s}$}
+\nomenclature[F]{\(\rho\)}{Density, $\nicefrac{lb_m}{ft^3}$}
+\nomenclature[F]{\(E\)}{Energy, $\nicefrac{ft^2}{s^2}$}
+% \nomenclature[F]{\(\mu\)}{Absolute Viscosity, $cP$}
+\nomenclature[D]{\(\Mach\)}{Mach Number}
+\nomenclature[D]{\(\Rey\)}{Reynolds Number} % don't use
+\nomenclature[D]{\(\Froude\)}{Froude Number} % don't use
+\nomenclature[S]{\(su\)}{Suction}
+\nomenclature[S]{\(te\)}{Throat Entry}
+\nomenclature[S]{\(ni\)}{Nozzle Inlet}
+\nomenclature[S]{\(nz\)}{Nozzle}
+\nomenclature[S]{\(tm\)}{Throat Mixture}
+\nomenclature[S]{\(di\)}{Diffuser}
+\nomenclature[M]{\(D\)}{Diameter, $ft$} % change to capital?
+\nomenclature[M]{\(A\)}{Area, $ft^2$} % change to capital?
+\nomenclature[M]{\(k\)}{Friction Factor, unitless}
+\nomenclature[F]{\(p\)}{Pressure, psia}
+\nomenclature[F]{\(t\)}{Temperature, $^{\circ}F$}
+
+\printnomenclature
+\end{document}
