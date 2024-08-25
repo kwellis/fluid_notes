@@ -1,0 +1,161 @@
+\documentclass{article}
+% \usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage[style=ieee, url=false]{biblatex}
+\usepackage{parskip} % adds a skipped paragraph
+\addbibresource{jpump.bib} %Import the bibliography file
+
+\newcommand\Mach{\mbox{\textit{Ma}}}  % Mach number
+\newcommand\Tee{\mbox{\textit{TEE}}}  % Throat Entry Equation
+
+\title{Optimizing Power Fluid in Jet Pump Oil Wells}
+\author{Kaelin Ellis}
+\date{September 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Jet pumps have been installed in oils wells since the 1980's. Until recently they have been a fringe artificial lift method compared to more traditional gas lift, electric submersible pumps or plunger lift. Greater adoption of jet pumps is occurring in wells that are prone to temperature related flow assurance issues. The power fluid is heated at surface, turning the oil wells annulus and tubing into a heat ex-changer. A scaled application of multiple jet pumps oil wells will share a surface power fluid pump. The surface pump creates a finite resource of power fluid that must be distributed among all the subsurface jet pumps. The distribution creates an optimization problem, where oil rate needs to be maximized with power fluid minimization. A method is proposed in this thesis that solves the optimization problem. 
+
+\section{Jet Pump Overview}
+
+Jet pumps are very simple devices that are broken into three mechanical components and five reference locations. Figure (xx) provides a sketch of the geometry of a jet pump. The three components are the nozzle, throat and diffuser. The five reference locations are the suction, nozzle inlet, throat entrance, throat mixture and diffuser outlet. The reservoir fluid flows to the suction, while the power fluid flows to the nozzle inlet. Both the reservoir fluid and power fluid experience an increase in velocity as they are respectively constricted through the throat entrance and nozzle tip. The increase in velocity creates a drop in pressure, allowing the two fluids to reach an equilibrium pressure. Momentum is transferred from the power fluid to the reservoir and mixing occurs. The cross sectional area is increased in the diffuser, reducing the velocity which builds back pressure. With the pressure increase the fluid can flow to surface. 
+
+\section{Energy Equation}
+
+Equation (\ref{raw_energy}) is the one dimensional fluids energy equation \cite{fluids_cheme}. The energy equation states that the differences in potential energy, pressure energy, kinetic energy, friction and work have to be equal.
+
+\begin{equation}
+gdz + \frac{dP}{\rho} + vdv + dF = dW
+\label{raw_energy}
+\end{equation}
+
+For a jet pump, the potential energy and work terms can be omitted. The equation simplifies to the jet pump energy equation (\ref{jpump_energy}).
+
+The nozzle, throat entrance and diffuser are described by
+
+\begin{equation}
+\frac{dP}{\rho} + vdv + dF = 0
+\label{jpump_energy}
+\end{equation}
+
+Modeling the throat entrance is the most complex component of the jet pump.
+
+\section{Throat Entrance}
+
+
+
+A foundational brick of a reliable power fluid optimization model is an accurate oil well jet pump model.
+
+Equation (\ref{diff_mass}) is the differential form of the conservation of mass equation. It states that the change in density, velocity and cross section area for a fluid need to equal to zero. Equation (\ref{energy_eqn}) is the energy equation. Stating the change in inverse density with pressure and velocity of the fluid must be zero. Equation (\ref{sonic_vel}) is a form of the sonic velocity equation. Where a is the speed of sound in the fluid.
+
+\begin{equation}
+\frac{d\rho}{\rho} + \frac{dV}{V} + \frac{dA}{A} = 0
+\label{diff_mass}
+\end{equation}
+
+\begin{equation}
+\frac{dp}{\rho} + VdV = 0
+\label{energy_eqn}
+\end{equation}
+
+\begin{equation}
+dp = a^2d\rho
+\label{sonic_vel}
+\end{equation}
+
+Equation (\ref{diff_mass}) is the differential form of the conservation of mass equation. It states that the change in density, velocity and cross section area for a fluid need to equal to zero. Equation (\ref{energy_eqn}) is the energy equation. Stating the change in inverse density with pressure and velocity of the fluid must be zero. Equation (\ref{sonic_vel}) is a form of the sonic velocity equation. Where a is the speed of sound in the fluid. 
+
+Looking at the jet pump system and equations, the following alterations are provided. For equation (\ref{diff_mass}), the system evaluated has a constant area at the point of reference. (Need to verify this with Dr. Miracle). Equation (\ref{diff_mass}) is rewrote as equation (\ref{diff_mass_c_area}).
+
+\begin{equation}
+\frac{d\rho}{\rho} + \frac{dV}{V} = 0
+\label{diff_mass_c_area}
+\end{equation}
+
+Equation (\ref{energy_eqn}) is defined in the jet pump review as TEE, or the throat entry equation. It will be rewritten this way to provide clarity.
+
+\begin{equation}
+    \Tee = \frac{dp}{\rho} + VdV
+\label{tee}
+\end{equation}
+
+Substituting in equation (\ref{sonic_vel}) into equation (\ref{tee}) yields the following.
+
+\begin{equation}
+    \Tee = \frac{a^2d\rho}{\rho} + VdV
+\end{equation}
+
+\begin{equation}
+    \frac{\Tee}{a^2} = \frac{d\rho}{\rho} + \frac{V}{a^2}dV
+    \label{tee_sub}
+\end{equation}
+
+Multiplying the differential velocity term of equation (\ref{tee_sub}) by $\frac{V}{V}$ yields.
+
+\begin{equation}
+    \frac{\Tee}{a^2} = \frac{d\rho}{\rho} + \frac{V^2}{a^2}\frac{dV}{V}
+    \label{tee_sub2}
+\end{equation}
+
+Equation (\ref{diff_mass_c_area}) is rewritten as.
+
+\begin{equation}
+    \frac{dV}{V} = - \frac{d\rho}{\rho}
+\end{equation}
+
+It is recognized that in equation (\ref{tee_sub2}) that $\frac{V^2}{a^2}$ is the Mach number squared $\Mach^2$ and yields the following.
+
+\begin{equation}
+\frac{\Tee}{a^2} = \frac{d\rho}{\rho} - \Mach^2\frac{d\rho}{\rho}
+\label{tee_sub3} 
+\end{equation}
+
+Simplifying equation (\ref{tee_sub3}) yields the another form of the throat entry equation.
+
+\begin{equation}
+    \Tee = \frac{a^2d\rho}{\rho}(1 - \Mach^2)
+\label{tee_sub4}    
+\end{equation}
+
+Finally substituting back in the definition of the speed of sound $a^2 = \frac{dp}{d\rho}$ back into the equation (\ref{tee_sub4}) gives the final definition.
+
+\begin{equation}
+    \Tee = \frac{dp}{\rho}(1 - \Mach^2)
+\label{tee_final}    
+\end{equation}
+
+What is interesting to note, is the sign of the TEE equation swaps once the mach velocity is crossed. This appears to be seen in the plot of the throat entry graphs for the jet pumps. Note, what we really care about swapping signs is the slope of $\frac{d\Tee}{dp}$, I am not sure how we can perform the $d\Tee$ derivative?
+
+\begin{equation}
+\frac{\Tee}{dp} = \frac{1}{\rho}(1 - \Mach^2)
+\end{equation}
+
+Not that the Bob Merrill paper \cite{merrill} is the best indication of mathematical literacy. They do a derivation of what they believe $\frac{d\Tee}{dp}$ should look like. The idea is that if you take $dx$ by itself without any denominator, it is still $x$. So by following the Merrill logic, you get the following.
+
+\begin{equation}
+    \frac{d\Tee}{dp} = \frac{1}{\rho}(1 - \Mach^2)
+\end{equation}
+
+\section{Throat Entry Equation Clarification}
+
+I just had an interesting realization. What Bob Merrill has been defining as the "Throat Entry Equation" or $\Tee$ is an energy balance. Actually, I always realized that it was an energy balance, what I didn't realize or think about is that it was already a differential energy term. So really Tee is actually $dE_{te}$, since it is not an absolute energy term, but you are looking at the difference in energy between two different states. So writing the $\Tee$ actually looks like.
+
+\begin{equation}
+    dE_{te} = \frac{dp}{\rho} + VdV
+\end{equation}
+
+The biggest takeaway is that conservation of energy is a law of thermodynamics. As a result the only point of $dE_{te}$ that has any physical meaning is when it equals zero.
+
+Apparently, Bernoulli's equation is a classic momentum equation result, Newton's law for a frictionless, incompressible fluid. It may also be interpreted, however, as an idealized \emph{energy} relation! The changes represent reversible pressure work, kinetic energy and potential energy.
+
+\section{Bib Practice}
+
+What should really happen, is you should read \cite{cunn_gas} and then read \cite{cunn_break}. Cunningham's paper on gas compression with liquid jet provides the best derivations for the jet pump equations \cite{cunn_gas}. Those two papers are the fundamental papers to what is being accomplished. After reading those two papers, then move onto the two phase flow 1995 Cunningham paper \cite{cunn_two}. The other paper that is decent is by Robert Merrill. The paper is more modern than Cunningham. It deals with numerical methods \cite{merrill}. Another good paper is out of Czechia on sound of speed in fluid mixtures \cite{himr}. The paper by Petrie doesn't take into account the throat entry pressure \cite{petrie}. NASA put out a series of good papers with the help of Sanger that did an excellent job of mapping out jet pump pressure distribution \cite{sanger}.
+
+\printbibliography
+
+\end{document}
