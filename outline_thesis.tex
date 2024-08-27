@@ -18,35 +18,59 @@
 
 \section{Introduction}
 
-Jet pumps have been installed in oils wells since the 1980's. Until recently they have been a fringe artificial lift method compared to more traditional gas lift, electric submersible pumps or plunger lift. Greater adoption of jet pumps is occurring in wells that are prone to temperature related flow assurance issues. The power fluid is heated at surface, turning the oil wells annulus and tubing into a heat ex-changer. A scaled application of multiple jet pumps oil wells will share a surface power fluid pump. The surface pump creates a finite resource of power fluid that must be distributed among all the subsurface jet pumps. The distribution creates an optimization problem, where oil rate needs to be maximized with power fluid minimization. A method is proposed in this thesis that solves the optimization problem. 
+Jet pumps have been installed in oils wells since the 1980's. Until recently they have been a fringe artificial lift method compared to more traditional gas lift, electric submersible pumps or plunger lift. Greater adoption of jet pumps is occurring in wells that are prone to temperature related flow assurance issues. The power fluid is heated at surface, turning the oil wells annulus and tubing into a heat ex-changer. A scaled application of multiple jet pumps oil wells will share a surface power fluid pump. The surface pump creates a finite resource of power fluid that must be distributed among all the subsurface jet pumps. The distribution creates an optimization problem, where oil rate needs to be maximized with power fluid minimization. A method is proposed in this thesis that solves the optimization problem.
+
+Should I say reservoir fluid or oil mixture? Define this term?
 
 \section{Jet Pump Overview}
 
-Jet pumps are very simple devices that are broken into three mechanical components and five reference locations. Figure (xx) provides a sketch of the geometry of a jet pump. The three components are the nozzle, throat and diffuser. The five reference locations are the suction, nozzle inlet, throat entrance, throat mixture and diffuser outlet. The reservoir fluid flows to the suction, while the power fluid flows to the nozzle inlet. Both the reservoir fluid and power fluid experience an increase in velocity as they are respectively constricted through the throat entrance and nozzle tip. The increase in velocity creates a drop in pressure, allowing the two fluids to reach an equilibrium pressure. Momentum is transferred from the power fluid to the reservoir and mixing occurs. The cross sectional area is increased in the diffuser, reducing the velocity which builds back pressure. With the pressure increase the fluid can flow to surface. 
+Jet pumps are very simple devices that are broken into three mechanical components and five reference locations. Figure (xx) provides a sketch of the geometry of a jet pump. The three components are the nozzle, throat and diffuser. The five reference locations are the suction, nozzle inlet, throat entrance, throat mixture and diffuser outlet. The reservoir fluid flows to the suction, while the power fluid flows to the nozzle inlet. Both the reservoir fluid and power fluid experience an increase in velocity as they are respectively constricted through the throat entrance and nozzle tip. The increase in velocity creates a drop in pressure, allowing the two fluids to reach an equilibrium pressure. In the throat momentum is transferred from the power fluid to the reservoir and mixing occurs. The cross sectional area is increased in the diffuser, reducing the velocity and increasing the pressure. With the pressure increase the fluid can flow to surface. 
 
 \section{Energy Equation}
 
-Equation (\ref{raw_energy}) is the one dimensional fluids energy equation \cite{fluids_cheme}. The energy equation states that the differences in potential energy, pressure energy, kinetic energy, friction and work have to be equal.
+The one dimensional fluids energy equation \eqref{raw_energy} provides the foundation for compressible flow in conduits \cite{fluids_cheme}. The energy equation states that the differences in potential energy, pressure energy, kinetic energy, friction and work have to be equal.
 
 \begin{equation}
 gdz + \frac{dP}{\rho} + vdv + dF = dW
 \label{raw_energy}
 \end{equation}
 
-For a jet pump, the potential energy and work terms can be omitted. The equation simplifies to the jet pump energy equation (\ref{jpump_energy}).
-
-The nozzle, throat entrance and diffuser are described by
+For a jet pump, the potential energy and work terms can be omitted. The equation simplifies to the jet pump energy equation \eqref{jpump_energy}.
 
 \begin{equation}
 \frac{dP}{\rho} + vdv + dF = 0
 \label{jpump_energy}
 \end{equation}
 
-Modeling the throat entrance is the most complex component of the jet pump.
+Fluid flow across the nozzle, throat entrance and diffuser can all be modeled using variations of the jet pump energy equation. The most complex fluid dynamics occur in throat entrance and it has the biggest impact on jet pump performance. (Need transition sentence)
 
 \section{Throat Entrance}
 
+The throat entrance is the area where the reservoir fluid flows into the throat. The power fluid is a solid jet at this location \cite{cunn_break}, taking away available flow area for the reservoir fluid. The jet pump energy equation is rewritten as differential energy equation for the throat entrance \eqref{diff_entr}. The suction velocity is assumed to be negligible.
 
+\begin{equation}
+dE_{te} = \int_{su}^{te} \frac{dP}{\rho} + \frac{v_{te}^{2}}{2} * (1+K_{en}) = 0
+\label{diff_entr}
+\end{equation}
+
+The reservoir fluid behaves as a non-ideal gas, the oil is compressible and gas soluble. A simple equation that accurately describes this behavior and can analytically be integrated does not exist. The analytical integral is transformed to a numerical integral with the trapezoid rule \eqref{trap_entr}.
+
+\begin{equation}
+dE_{te} = \frac{\Delta P}{2}\sum_{k=su}^{te} (\frac{1}{\rho_{k}} + \frac{1}{\rho_{k+1}}) + \frac{v_{te}^{2}}{2} * (1+K_{en}) = 0
+\label{trap_entr}
+\end{equation}
+
+The throat entry differential energy equation is assessed in two sections, the pressure energy and the kinetic energy. The pressure energy is the area under the fluid specific volume curve. The kinetic energy is the throat entry velocity squared, distributed to account for the entrance friction. A solution is found when the sum of the pressure and kinetic energy equal zero. The method begins with a known suction pressure and oil mixture flow rate, defined by the wells inflow performance relationship (IPR). The pressure at the throat entrance is reduced in increments, driving new values of the kinetic and pressure energy. When the sum of these two terms equals zero, a solution is found and the reduction stops. Occasionally the reservoir fluid will hit its sonic velocity before the $dE_{te}$ equals zero. This implies too much flow is trying to be pushed through the jet pump throat entrance. A new higher suction pressure needs to be selected, which drives a lower reservoir flow rate. The next section provides further detail on the sonic velocity.
+
+\section{Sonic Velocity}
+
+Sonic velocity is defined as the max velocity that a sound wave can propagate through a fluid. Said in a another manner, its how quickly particles of a fluid can move through space before an accumulation of the particles occurs. Attempting to flow a fluid faster than its sonic velocity creates a build up of the fluid, which regulates the fluid speed down to the sonic velocity. The exception to this is when a specialized super sonic nozzle is used, allowing the particles to spread out which accelerates them above the sonic velocity. A super sonic nozzle cannot be designed into a jet pump.
+
+The sonic velocity limitation is exacerbated by a two-phase liquid and vapor mixture. The resultant sonic velocity of a two phase mixture is less than its individual components \cite{himr}. An example being a mixture of air and water. Individually the sonic velocity of the water and air are 5000 and 1100 ft/s respectively. Combining these fluids in a 50/50 mixture results in a sonic velocity of 300 ft/s.
+
+\textbf{Add some BS about how the speed of sound is calculated in a mixture??? Look at Himr, write the final equation.}
+
+The restriction forces the reservoir fluid to increase in velocity and decrease in pressure. The decrease in pressure expands the free gas and oil in mixture exacerbating the restricted flow.
 
 A foundational brick of a reliable power fluid optimization model is an accurate oil well jet pump model.
 
