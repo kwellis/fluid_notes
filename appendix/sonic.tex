@@ -5,9 +5,20 @@
 \newcommand\Mach{\mbox{\textit{Ma}}}  % Mach number
 \newcommand\Tee{\mbox{\textit{TEE}}}  % Throat Entry Equation
 
+\title{Differential Energy of the Throat Entry vs Differential Pressure}
+
 \begin{document}
 
-\section{Introduction}
+\maketitle
+
+\section{Derivation}
+
+Three fundamental equations are used when assessing the behavior of the throat entrance differential energy versus the change in pressure. The three equations are friction-less throat entry differential energy \eqref{dete_nofric}, differential conservation of mass \eqref{diff_mass}, and sonic velocity of a fluid \eqref{sonic_vel}.
+
+\begin{equation}
+dE_{te} = \frac{dp}{\rho} + VdV
+\label{dete_nofric}
+\end{equation}
 
 \begin{equation}
 \frac{d\rho}{\rho} + \frac{dV}{V} + \frac{dA}{A} = 0
@@ -15,98 +26,67 @@
 \end{equation}
 
 \begin{equation}
-\frac{dp}{\rho} + VdV = 0
-\label{energy_eqn}
-\end{equation}
-
-\begin{equation}
 dp = a^2d\rho
 \label{sonic_vel}
 \end{equation}
 
-Equation (\ref{diff_mass}) is the differential form of the conservation of mass equation. It states that the change in density, velocity and cross section area for a fluid need to equal to zero. Equation (\ref{energy_eqn}) is the energy equation. Stating the change in inverse density with pressure and velocity of the fluid must be zero. Equation (\ref{sonic_vel}) is a form of the sonic velocity equation. Where a is the speed of sound in the fluid. 
-
-Looking at the jet pump system and equations, the following alterations are provided. For equation (\ref{diff_mass}), the system evaluated has a constant area at the point of reference. (Need to verify this with Dr. Miracle). Equation (\ref{diff_mass}) is rewrote as equation (\ref{diff_mass_c_area}).
+The area of the throat entry stays constant through out the entire problem. The constant area allows the differential area term in the conservation of mass equation \eqref{diff_mass} to be dropped. The differential form of the conservation of mass is rewritten with out changes in area \eqref{mass_noarea}.
 
 \begin{equation}
 \frac{d\rho}{\rho} + \frac{dV}{V} = 0
-\label{diff_mass_c_area}
+\label{mass_noarea}
 \end{equation}
 
-Equation (\ref{energy_eqn}) is defined in the jet pump review as TEE, or the throat entry equation. It will be rewritten this way to provide clarity.
+The fluid sonic velocity definition \eqref{sonic_vel} is substituted into $dE_{te}$ \eqref{dete_nofric}.
 
 \begin{equation}
-    \Tee = \frac{dp}{\rho} + VdV
-\label{tee}
+dE_{te} = \frac{a^{2}dp}{\rho} + VdV
+\label{dete_sonic}
 \end{equation}
 
-Substituting in equation (\ref{sonic_vel}) into equation (\ref{tee}) yields the following.
+Equation \eqref{dete_sonic} is rewritten by dividing the entire equation by $a^{2}$ and multiplying the change in velocity by $\frac{V}{V}$.
 
 \begin{equation}
-    \Tee = \frac{a^2d\rho}{\rho} + VdV
+\frac{dE_{te}}{a^{2}} = \frac{dp}{\rho} + \frac{V^2}{a^2}\frac{dV}{V}
+\label{dete_complex}
 \end{equation}
 
+The conservation of mass with constant area equation (\ref{mass_noarea}) is rewritten.
+
 \begin{equation}
-    \frac{\Tee}{a^2} = \frac{d\rho}{\rho} + \frac{V}{a^2}dV
-    \label{tee_sub}
+\frac{dV}{V} = - \frac{d\rho}{\rho}
+\label{mass_equal}
 \end{equation}
 
-Multiplying the differential velocity term of equation (\ref{tee_sub}) by $\frac{V}{V}$ yields.
+In equation \eqref{dete_complex} the term $\frac{V^2}{a^2}$ is equivalent to the Mach number squared $\Mach^2$. Equation \eqref{mass_equal} is also substituted into \eqref{dete_complex}.
+
+
 
 \begin{equation}
-    \frac{\Tee}{a^2} = \frac{d\rho}{\rho} + \frac{V^2}{a^2}\frac{dV}{V}
-    \label{tee_sub2}
+\frac{dE_{te}}{a^2} = \frac{d\rho}{\rho} - \Mach^2\frac{d\rho}{\rho}
+\label{dete_sub3} 
 \end{equation}
 
-Equation (\ref{diff_mass_c_area}) is rewritten as.
+Further simplification of \eqref{dete_sub3}.
 
 \begin{equation}
-    \frac{dV}{V} = - \frac{d\rho}{\rho}
+dE_{te} = \frac{a^2d\rho}{\rho}(1 - \Mach^2)
+\label{dete_sub4}    
 \end{equation}
 
-It is recognized that in equation (\ref{tee_sub2}) that $\frac{V^2}{a^2}$ is the Mach number squared $\Mach^2$ and yields the following.
+Substituting the definition of sonic velocity $a^2 = \frac{dp}{d\rho}$ into equation \eqref{dete_sub4} gives the final definition.
 
 \begin{equation}
-\frac{\Tee}{a^2} = \frac{d\rho}{\rho} - \Mach^2\frac{d\rho}{\rho}
-\label{tee_sub3} 
-\end{equation}
-
-Simplifying equation (\ref{tee_sub3}) yields the another form of the throat entry equation.
-
-\begin{equation}
-    \Tee = \frac{a^2d\rho}{\rho}(1 - \Mach^2)
-\label{tee_sub4}    
-\end{equation}
-
-Finally substituting back in the definition of the speed of sound $a^2 = \frac{dp}{d\rho}$ back into the equation (\ref{tee_sub4}) gives the final definition.
-
-\begin{equation}
-    \Tee = \frac{dp}{\rho}(1 - \Mach^2)
+dE_{te} = \frac{dp}{\rho}(1 - \Mach^2)
 \label{tee_final}    
 \end{equation}
 
-What is interesting to note, is the sign of the TEE equation swaps once the mach velocity is crossed. This appears to be seen in the plot of the throat entry graphs for the jet pumps. Note, what we really care about swapping signs is the slope of $\frac{d\Tee}{dp}$, I am not sure how we can perform the $d\Tee$ derivative?
+Dividing the final form of the $dE_{te}$ by the differential pressure term.
 
 \begin{equation}
-\frac{\Tee}{dp} = \frac{1}{\rho}(1 - \Mach^2)
+\frac{dE_{te}}{dp} = \frac{1}{\rho}(1 - \Mach^2)
 \end{equation}
 
-Not that the Bob Merrill paper \cite{merrill} is the best indication of mathematical literacy. They do a derivation of what they believe $\frac{d\Tee}{dp}$ should look like. The idea is that if you take $dx$ by itself without any denominator, it is still $x$. So by following the Merrill logic, you get the following.
-
-\begin{equation}
-    \frac{d\Tee}{dp} = \frac{1}{\rho}(1 - \Mach^2)
-\end{equation}
-
-\section{Throat Entry Equation Clarification}
-
-I just had an interesting realization. What Bob Merrill has been defining as the "Throat Entry Equation" or $\Tee$ is an energy balance. Actually, I always realized that it was an energy balance, what I didn't realize or think about is that it was already a differential energy term. So really Tee is actually $dE_{te}$, since it is not an absolute energy term, but you are looking at the difference in energy between two different states. So writing the $\Tee$ actually looks like.
-
-\begin{equation}
-    dE_{te} = \frac{dp}{\rho} + VdV
-\end{equation}
-
-The biggest takeaway is that conservation of energy is a law of thermodynamics. As a result the only point of $dE_{te}$ that has any physical meaning is when it equals zero.
-
-Apparently, Bernoulli's equation is a classic momentum equation result, Newton's law for a frictionless, incompressible fluid. It may also be interpreted, however, as an idealized \emph{energy} relation! The changes represent reversible pressure work, kinetic energy and potential energy.
+Write up some words about how this describes the behavior seen in the plots of $dE_{te}$ against differential pressure.
 
 \end{document}
