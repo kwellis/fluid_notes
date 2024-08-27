@@ -1,20 +1,11 @@
 \documentclass{article}
-% \usepackage{graphicx} % Required for inserting images
 \usepackage{amsmath}
-\usepackage[style=ieee, url=false]{biblatex}
 \usepackage{parskip} % adds a skipped paragraph
-\addbibresource{jpump.bib} %Import the bibliography file
 
 \newcommand\Mach{\mbox{\textit{Ma}}}  % Mach number
 \newcommand\Tee{\mbox{\textit{TEE}}}  % Throat Entry Equation
 
-\title{Sonic Velocity Notes}
-\author{Kaelin Ellis}
-\date{February 2024}
-
 \begin{document}
-
-\maketitle
 
 \section{Introduction}
 
@@ -117,11 +108,5 @@ I just had an interesting realization. What Bob Merrill has been defining as the
 The biggest takeaway is that conservation of energy is a law of thermodynamics. As a result the only point of $dE_{te}$ that has any physical meaning is when it equals zero.
 
 Apparently, Bernoulli's equation is a classic momentum equation result, Newton's law for a frictionless, incompressible fluid. It may also be interpreted, however, as an idealized \emph{energy} relation! The changes represent reversible pressure work, kinetic energy and potential energy.
-
-\section{Bib Practice}
-
-What should really happen, is you should read \cite{cunn_gas} and then read \cite{cunn_break}. Cunningham's paper on gas compression with liquid jet provides the best derivations for the jet pump equations \cite{cunn_gas}. Those two papers are the fundamental papers to what is being accomplished. After reading those two papers, then move onto the two phase flow 1995 Cunningham paper \cite{cunn_two}. The other paper that is decent is by Robert Merrill. The paper is more modern than Cunningham. It deals with numerical methods \cite{merrill}. Another good paper is out of Czechia on sound of speed in fluid mixtures \cite{himr}. The paper by Petrie doesn't take into account the throat entry pressure \cite{petrie}. NASA put out a series of good papers with the help of Sanger that did an excellent job of mapping out jet pump pressure distribution \cite{sanger}.
-
-\printbibliography
 
 \end{document}
