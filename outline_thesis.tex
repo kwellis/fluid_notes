@@ -1,13 +1,19 @@
-\documentclass{article}
-% \usepackage{graphicx} % Required for inserting images
+% Ellis Masters Project Report % 
+% Required Packages %
+\documentclass[12 pt]{report}
+\usepackage[margin=1 in]{geometry}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{xspace}
 \usepackage[style=ieee, url=false]{biblatex}
 \usepackage{parskip} % adds a skipped paragraph
 \addbibresource{jpump.bib} %Import the bibliography file
 
-\newcommand\Mach{\mbox{\textit{Ma}}}  % Mach number
-\newcommand\Tee{\mbox{\textit{TEE}}}  % Throat Entry Equation
+\newcommand{\Mach}{\mbox{\textit{Ma}}}  % Mach number
+\newcommand{\dete}{$\mathrm{dE_{te}}$\xspace}  % Throat Entry Equation
+\newcommand{\pte}{$\mathrm{P_{te}}$\xspace}  % Pressure Throat Entry Equation
+\newcommand{\pnz}{$\mathrm{P_{nz}}$\xspace}  % Pressure Nozzle Tip
+\newcommand{\pni}{$\mathrm{P_{ni}}$\xspace}  % Pressure Nozzle Tip
 
 \title{Optimizing Power Fluid in Jet Pump Oil Wells}
 \author{Kaelin Ellis}
@@ -17,24 +23,55 @@
 
 \maketitle
 
-\section{Introduction}
+\section{Technical Introduction}
 
-Jet pumps have been installed in oils wells since the 1980's. Until recently they have been a fringe artificial lift method compared to more traditional gas lift, electric submersible pumps or plunger lift. Greater adoption of jet pumps is occurring in wells that are prone to temperature related flow assurance issues. The power fluid is heated at surface, turning the oil wells annulus and tubing into a heat ex-changer. A scaled application of multiple jet pumps oil wells will share a surface power fluid pump. The surface pump creates a finite resource of power fluid that must be distributed among all the subsurface jet pumps. The distribution creates an optimization problem, where oil rate needs to be maximized with power fluid minimization. A method is proposed in this thesis that solves the optimization problem. Should I say reservoir fluid or oil mixture? Define this term?
+Jet pumps are simple devices with no moving parts. They take advantage of the fluid energy relationship to transfer pressure energy into kinetic energy, combine two fluid’s kinetic energies and then re-convert the kinetic into pressure again. With that being said, some complexities of jet pumps exist, especially when operating in multiphase flow as an oil jet pump does. The complexities arise when trying to model the behavior of the reservoir fluid while it flows into the jet pump. As the reservoir fluid speeds up, kinetic energy is increased, which creates a drop in pressure, liberating gas from the solution. The multiphase phase mixture of oil, water and gas has a sonic velocity that is much lower than the individual components of pure liquid or pure vapor.  The combination of a high mixture velocity and a low sonic velocity creates an inconvenient situation, where the fluid can hit its sonic flow limitation. Once the sonic velocity is reached, no further reduction in discharge pressure has an effect on the flow through the pump. A dynamic boundary is reached, with the only solution being a new jet pump with a larger flow area. Properly calculating the sonic velocity of a multiphase mixture is critical to capturing the behavior of a multiphase jet pump.
 
-\section{Jet Pump Overview}
+\section{Sonic Velocity}
 
-Jet pumps are very simple devices that are broken into three mechanical components and six reference locations. Figure \ref{fig:jetpump_side} provides a sketch of the geometry of a jet pump. The three components are the nozzle, throat and diffuser. The six reference locations are the suction, nozzle inlet, nozzle tip, throat entrance, throat mixture and diffuser outlet. The reservoir fluid flows to the suction, while the power fluid flows to the nozzle inlet. Both the reservoir fluid and power fluid experience an increase in velocity as they are respectively constricted through the throat entrance and nozzle tip. The increase in velocity creates a drop in pressure, allowing the two fluids to reach an equilibrium pressure. In the throat momentum is transferred from the power fluid to the reservoir and mixing occurs. The cross sectional area is increased in the diffuser, reducing the velocity and increasing the pressure. With the pressure increase the fluid can flow to surface. 
+Sonic velocity is the speed that sound moves through a fluid. The sound propagates as a wave, where one particle comes into contact with another. These interactions cascade which allows sound to be transmitted from one location to another. The same phenomenon occurs when a fluid flows through a pipe. The particles move forward with a bulk velocity, but internally in the pipe, fluid interactions are also occurring. The reason the fluid flows along the pipe at the same mass flow rate is because the bulk velocity is operating below the sonic velocity. Said in another manner, the bulk speed of the fluid is less than how quickly the particles can move away from each other. Attempting to flow faster than the sonic velocity creates an accumulation of particles which in turn slows down the fluid to below its sonic velocity. Specialized devices exist that can eliminate the accumulation and accelerate the fluid above its sonic velocity, but they are not pertinent to this report. The next section will explore computing the properties required for predicting a multiphase mixture sonic velocity.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{figures/jetpump_ovr1.png}
-    \caption{Jet Pump Overview}
-    \label{fig:jetpump_side}
-\end{figure}
+The properties required for predicting sonic velocity are the modulus of elasticity, K and the fluid density, $\rho$. The modulus of elasticity is how much deformation a fluid will experience under pressure. In the analysis a homogeneous mixture is assumed for the fluid as it flows into the jet pump. Calculating the mixtures modulus of elasticity and density are displayed in equations \eqref{mix_elas} and \eqref{mix_dens} respectively. As seen, the mixture modulus of elasticity is dependent on the volume fractions of the oil, water and gas. The mixture density is dependent on the mass fractions of the components.
 
-\section{Energy Equation}
+\begin{equation}
+\frac{1}{K_{mix}} = \frac{y_{o}}{K_{o}} + \frac{y_{w}}{K_{w}} + \frac{y_{g}}{K_{g}}
+\label{mix_elas}
+\end{equation}
 
-The one dimensional fluids energy equation \eqref{raw_energy} provides the foundation for compressible flow in conduits \cite{fluids_cheme}. The energy equation states that the differences in potential energy, pressure energy, kinetic energy, friction and work have to be equal.
+\begin{equation}
+\frac{1}{\rho_{mix}} = \frac{m_{o}}{\rho_{o}} + \frac{m_{w}}{\rho_{w}} + \frac{m_{g}}{\rho_{g}}
+\label{mix_dens}
+\end{equation}
+
+With the appropriate mixture properties, the standard equation for calculating the sonic velocity of a fluid is used, displayed in equation \eqref{speed_sound}. 
+
+\begin{equation}
+c_{mix} = \sqrt{\frac{K_{mix}}{\rho_{mix}}}
+\label{speed_sound}
+\end{equation}
+
+The Mach number is a dimensionless number that compares the velocity a fluid is flowing to its speed of sound, represented in equation \eqref{mach_no}.
+
+\begin{equation}
+Ma = \frac{v_{mix}}{c_{mix}}
+\label{mach_no}
+\end{equation}
+
+Any Mach number of 1.0 or greater is sonic. Flow can also be described sonically by the categories listed below.
+
+\begin{itemize}
+    \item Subsonic: $Ma \leq 0.8$
+    \item Transonic: $0.8 < Ma < 1.2$
+    \item Supersonic: $1.2 \leq Ma$
+\end{itemize}
+
+The boundary limit for oil well jet pumps is a Mach value of 1 or below.
+
+As previously said, a multiphase mixture of vapor and liquid has the inconvenient property of its mixture velocity being less than the individual components \cite{himr}. An example of this is a mixture of air and water. The individual components of air and water have a sonic velocity of 1100 and 5000 ft/s respectively. Combining these fluids in a 50/50 mixture results in a sonic velocity of 300 ft/s, nearly a quarter less than the sonic velocity of the air by itself. The relationship of sonic velocity and mixture velocity will be explored more in the detailed discussions on the jet pump throat entrance. Before progressing to the throat entrance, further background is needed on the fundamental equations for a jet pump, namely the fluid energy equation.
+
+\section{Fluid Energy Equation}
+
+The one dimensional fluid energy equation \eqref{raw_energy} provides the foundation for compressible flow in conduits \cite{fluids_cheme}. The energy equation states that the differences in potential energy, pressure energy, kinetic energy, friction and work have to be equal.
 
 \begin{equation}
 gdz + \frac{dP}{\rho} + vdv + dF = dW
@@ -48,58 +85,139 @@ For a jet pump, the potential energy and work terms can be omitted. The equation
 \label{jpump_energy}
 \end{equation}
 
-Fluid flow across the nozzle tip, throat entrance and diffuser can all be modeled using variations of the jet pump energy equation. The most complex fluid dynamics occur in throat entrance and it has the biggest impact on jet pump performance.
+Fluid flow across a jet pump nozzle tip, throat entrance and diffuser can all be modeled using variations of the jet pump energy equation. The details on these different components will be detailed in the next sections.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{figures/jp_over_v2.PNG}
+    \caption{Jet Pump Overview}
+    \label{fig:jetpump_side}
+\end{figure}
+
+\section{Jet Pump Components}
+
+A jet pump is a made up of three mechanical components which are the nozzle, throat and diffuser. Six reference locations are assigned inside the jet pump for differences in pressure or fluid properties. The reference locations are the suction (su), nozzle inlet (ni), nozzle tip (nz), throat entrance (te), throat mixture (tm) and diffuser outlet (di). Figure \ref{fig:jetpump_side} provides a sketch of the geometry of a jet pump. 
+
+\section{Nozzle Size and Throat Ratio}
+
+A jet pump is identified by a nozzle number and a throat ratio. The nozzle number is an integer with a value of 1 to 20, each corresponding to a specific diameter. The throat ratio is a letter of the form X, A, B, C, D or E which is the throat diameter divided by the nozzle diameter. An example of the identification is 11X, 13C, or 9D. Table \ref{tab:national_jp_ratios} shows the numeric ratios at each letter.
+
+\input{tables/national_ratios}
+
+Specifying jet pumps in this manner allows quick generalities to be made about the behavior. An X pump will provide the largest head, but the smallest suction flow for a given nozzle. Likewise an E will provide the smallest head, but the largest suction flow for a given nozzle.
+
+Instead of using the specified ratios to calculate the throat diameter a lookup table can be used. Table \ref{tab:national_jp_dims} are the jet pump dimensions offered by National Jet Pumps \cite{petrie}. As shown both the nozzle and throat have a unique number that identifies the diameter. Columns 2 and 3 in table \ref{tab:national_jp_ratios} show how those numbers can be used to find the exact diameter of the nozzle and throat. A list of examples are provided.
+
+\begin{itemize}
+    \item 11X Jet Pump - 11 Nozzle with 10 Throat
+    \item 12C Jet Pump - 12 Nozzle with 14 Throat
+    \item 13A Jet Pump - 13 Nozzle with 13 Throat
+\end{itemize}
+
+\input{tables/national_dims}
 
 \section{Throat Entrance}
 
-The throat entrance is the area where the reservoir fluid flows into the throat. The power fluid is a solid jet at this location \cite{cunn_break}, taking away available flow area for the reservoir fluid. The jet pump energy equation is rewritten as differential energy equation for the throat entrance \eqref{diff_entr}. The suction velocity is assumed to be negligible.
+The throat entrance contains the most complex fluid dynamics of all the jet pump sections. The pressure obtained at the throat entrance cascades across to the nozzle, throat and diffuser. As such it is the natural starting point.
+
+The reservoir fluid starts its flow into the suction of the jet pump and is then constricted down through the throat entrance. The area of the throat entrance is equal to the throat area minus the nozzle jet area. At the throat entrance, the power fluid from the nozzle is in a continuous jet taking away valuable space for the reservoir fluid to flow. Figure \ref{fig:jetpump_side} shows how the jet is occupying space at the throat entrance.
+
+To properly model the fluid in the throat entrance, an accurate description needs to be obtained. The reservoir fluid is a three phase mixture, which does not behave as an ideal gas and the liquid is continually liberating gas into the vapor phase. As such, minimal assumptions can be applied to the fluid energy equation to simplify it. The only assumption that can be applied is that the velocity of the reservoir fluid at the pump suction is negligible compared to the velocity at the throat entrance. The energy equation \eqref{jpump_energy} is rewritten specifically for the throat entrance as equation \eqref{diff_entr}.
 
 \begin{equation}
+% The vphantom gets the vertical alignment of the underbraces
 dE_{te} = \int_{su}^{te} \frac{dP}{\rho} + \frac{v_{te}^{2}}{2} * (1+K_{en}) = 0
 \label{diff_entr}
 \end{equation}
 
-The reservoir fluid behaves as a non-ideal gas, the oil is gas soluble and compressible. The mathematical model and analytical integration of such a complex fluid is difficult, if not impossible. To simplify the problem the analytical integral is transformed to a numerical integral with the trapezoid rule \eqref{trap_entr}.
+The term \dete stands for differential energy of the throat entrance. The equation calculates the difference in energy between the fluid at the suction and at the throat entrance. To have physical meaning, the \dete term needs to equal zero.
+
+As previously stated, equation \eqref{diff_entr} is the farthest the energy equation can analytically be simplified. Analytically integrating an equation that describes the density of a three phase mixture with a gas soluble liquid and a non-ideal gas would be formidable. To simplify the problem, the analytical integration is turned into a numerical integration using the trapezoidal rule. Equation \eqref{trap_entr} shows the numerical solution of the throat entrance energy equation.
 
 \begin{equation}
-dE_{te} = \frac{\Delta P}{2}\sum_{k=su}^{te} (\frac{1}{\rho_{k}} + \frac{1}{\rho_{k+1}}) + \frac{v_{te}^{2}}{2} * (1+K_{en}) = 0
+% The vphantom gets the vertical alignment of the underbraces
+dE_{te} = \underbrace{\frac{\Delta P}{2}\sum_{k=su}^{te} (\frac{1}{\rho_{k}} + \frac{1}{\rho_{k+1}})}_{\text{Expansion Energy}} + \underbrace{\vphantom{\sum_{k=su}^{te}}{\frac{v_{te}^{2}}{2} * (1+K_{en})}}_{\text{Kinetic Energy}} = 0
 \label{trap_entr}
 \end{equation}
 
-The throat entry differential energy equation is assessed in two sections, the pressure energy and the kinetic energy. The pressure energy is the area under the fluid specific volume curve. The kinetic energy is the throat entry velocity squared, distributed to account for the entrance friction. A solution is found when the sum of the pressure and kinetic energy equal zero. The method begins with a known suction pressure and oil mixture flow rate, defined by the wells inflow performance relationship (IPR). The pressure at the throat entrance is reduced in increments, driving new values of the kinetic and pressure energy. When the sum of these two terms equals zero, a solution is found and the reduction stops. Occasionally the reservoir fluid will hit its sonic velocity before the $dE_{te}$ equals zero. This implies too much flow is trying to be pushed through the jet pump throat entrance. A new higher suction pressure needs to be selected, which drives a lower reservoir flow rate. The next section provides further detail on the sonic velocity.
+For ease of discussion \dete is split into two terms. The first term is the expansion energy, which represents the energy change from pressure differences. The second term is the kinetic energy, which accounts for energy related to the fluid's velocity and friction. The solution value of \pte{} is obtained when the kinetic and expansion energy sum to zero. This is achieved with iteration, with the detailed steps outlined below.
+\begin{enumerate}
+    \item Select a small pressure delta to step the suction pressure down
+    \item Reduce pressure by the delta 
+    \item Calculate the reservoir fluid specific volume, throat entrance velocity, and sonic velocity 
+    \item Integrate the area under the specific volume curve for the expansion energy
+    \item Square the throat entrance velocity for the kinetic energy
+    \item Add the kinetic energy and expansion energy together for \dete{}
+    \item Four variations in outcome can occur:
+    \begin{enumerate}
+        \item \dete{} is positive and the Mach number is below one. Continue reducing the pressure by the delta step.
+        \item \dete{} is positive and the Mach number is greater than or equal to one. The suction flow rate selected was too high for the suction pressure. Select a new suction flow rate and pressure.
+        \item \dete{} is negative and the Mach number is below one. A non-choked solution was found for \pte.
+        \item \dete{} is negative and the Mach number is greater than or equal to one. A choked solution was found for \pte.
+    \end{enumerate}
+\end{enumerate}
 
-\section{Sonic Velocity}
+Figure \ref{fig:dete_multi} is a plot of the \dete{} for five difference suction pressures and different flow rates. The legend has values for suction pressure and flow rate, which are set by the reservoir conditions. Only the barrels of oil produced are displayed instead of also including the natural gas and water.
 
-Sonic velocity is defined as the max velocity that a sound wave can propagate through a fluid. Said in a another manner, its how quickly particles of a fluid can move through space before an accumulation of the particles occurs. Attempting to flow a fluid faster than its sonic velocity creates a build up of the fluid, which regulates the fluid speed down to the sonic velocity. The exception to this is when a specialized super sonic nozzle is used, allowing the particles to spread out which accelerates them above the sonic velocity. A super sonic nozzle cannot be designed into an oil well jet pump.
+\begin{figure}
+    \centering
+    \includegraphics[scale=1]{figures/entry_multi.png}
+    \caption{\dete at Different Suction Conditions}
+    \label{fig:dete_multi}
+\end{figure}
 
-The sonic velocity limitation is exacerbated by a two-phase liquid and vapor mixture. The resultant sonic velocity of a two phase mixture is less than its individual components \cite{himr}. An example being a mixture of air and water. Individually the sonic velocity of the water and air are 5000 and 1100 ft/s respectively. Combining these fluids in a 50/50 mixture results in a sonic velocity of 300 ft/s.
+The crosses in the graph are where a Mach number of one is predicted. Past this point the results are non-physical for the problem. In the graph, solutions for \pte{} are seen where the \dete{} line crosses the zero axis. As seen, a if a suction pressure is chosen too low, the fluid will not have enough pressure energy to move the required flow through the jet pump. A new suction pressure needs to be obtained with a higher pressure.
 
-Calculating the sonic velocity of an oil mixture is straight forward. A homogenous three phase mixture of oil, water and gas is assumed. The mixture bulk modulus of elasticity and density are calculated with equation \eqref{mix_elas} and \eqref{mix_dens} respectively.
+Further detail on the variables that go into \dete{} are shown in figure \ref{fig:entr_four} for a singular suction pressure and flow rate. This graph provides details on the specific volume, mixture velocity, sonic velocity and separate expansion and kinetic energies. Also, the graph of \dete is not truncated above a Mach number of one. Looking more closely at the \dete graph one can observe the slope of the curve transitioning from a positive to a negative slope. The transition of the slope occurs as the jet pump is operating in transonic flow. Where the slope of the line is zero coincides with a Mach value of one. A full derivation from first principle equations is provided in Appendix A. The end result of the derivation is equation \eqref{dete_dp}.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=1]{figures/entry_four.png}
+    \caption{Required Properties for Calculating Throat Entry Pressure}
+    \label{fig:entr_four}
+\end{figure}
 
 \begin{equation}
-\frac{1}{K_{mix}} = \frac{y_{o}}{K_{o}} + \frac{y_{w}}{K_{w}} + \frac{y_{g}}{K_{g}}
-\label{mix_elas}
-\end{equation}
-
-\begin{equation}
-\frac{1}{\rho_{mix}} = \frac{m_{o}}{\rho_{o}} + \frac{m_{w}}{\rho_{w}} + \frac{m_{g}}{\rho_{g}}
-\label{mix_dens}
-\end{equation}
-
-\begin{equation}
-c_{mix} = \sqrt{\frac{K_{mix}}{\rho_{mix}}}
-\label{speed_sound}
-\end{equation}
-
-Another aspect that is made difficult by the sonic velocity is calculating when the $dE_{te}$ will cross the zero axis. When the fluid is operating sub sonic, or under a Mach value of 0.8, the relationship of $dE_{te}$ versus pressure is linear. As the fluid speeds up above mach 0.8, the slope of $dE_{te}$ against pressure starts to level off. When the fluid is operating at Mach One, the value of $\frac{dE_{te}}{dP}$ is zero. This is a known behavior in compressible fluid mechanics, where many relationships will flip in value once the fluid is super sonic \cite{fluids_white}. A derivation that analytically validates this behavior is show in the appendix and summarized in equation \eqref{dete_dp}. 
-
-\begin{equation}
-\frac{dE_{te}}{dp} = \frac{1}{\rho}(1 - \Mach^2)
+\frac{dE_{te}}{dP} = \frac{1}{\rho}(1 - \Mach^2)
 \label{dete_dp}
 \end{equation}
 
-Areas of improvement:
-Explain Mach numbers?
+Looking a figure \ref{fig:entr_four} it should be apparent that there are two methods of finding the pressure that Mach one occurs. The first method is using the velocity plot to find the point where the mixture and sonic velocity lines intersect. The second method is finding where the gradient of the \dete line is zero. The fact that these different methods produce the same result gives confidence in the fluid properties being produced.
+
+\section{Nozzle}
+
+The physics at the nozzle are straightforward compared to the throat entrance. In the analysis water is used as the power fluid across the nozzle. Water is in-compressible and the velocity at the nozzle inlet is negligible. The jet pump energy equation can be analytically integrated for all the terms. The simplified energy equation for nozzle flow is displayed in equation \eqref{nozz_pnz}.
+
+\begin{equation}
+P_{nz} = P_{ni} - \frac{\rho_{nz}v_{nz}^2}{2}*(1+K_{nz})
+\label{nozz_pnz}
+\end{equation}
+
+For a jet pump the pressure at the throat entrance, \pte, is equal to the pressure at the nozzle tip, \pnz.
+
+\begin{equation}
+P_{te} = P_{ni} - \frac{\rho_{nz}v_{nz}^2}{2}*(1+K_{nz})
+\label{nozz_pte}
+\end{equation}
+
+Equation \eqref{nozz_pte} can be rewritten to solve for the velocity across the nozzle. The nozzle inlet pressure, \pni, equals the surface power fluid pressure plus static gradient. The \pte was previously calculated by analyzing the reservoir fluid. Once the nozzle velocity is obtained, the total power fluid required is found by using the cross sectional area of the nozzle specified.
+
+\section{Throat}
+
+The throat is responsible for preforming the momentum transfer between the power fluid jet and reservoir fluid. The jet and oil mixture the enter the throat as two distinct phases. As the two fluids travel down the throat the jet starts to breakup and dissipate into the reservoir fluid. Before the the two fluids leave the throat the jet should have totally broken up \cite{cunn_break}. The throat is the only component in the jet pump that cannot be modeled by the energy equation. Instead, a momentum transfer is applied. The final version of the momentum transfer is shown in equation \eqref{throat}.
+
+\begin{equation}
+P_{te} - P_{tm} = \frac{\rho_{tm}v_{tm}^{2}K_{th}}{2} 
+ + \frac{m_{tm}v_{tm}}{A_{th}} - \frac{m_{nz}v_{nz}}{A_{th}} - \frac{m_{te}v_{te}}{A_{th}}
+\label{throat}
+\end{equation}
+
+The conditions at the throat entrance and nozzle have been obtained in the previous sections. The density and velocity at the outlet of the throat are dependent on the pressure at the outlet. Due to the implicit nature of the equation an iterative loop is required. The equation is rewritten in terms of zero. The secant method is applied to iterate on Ptm until the equation converges too zero.
+
+\section{Diffuser}
+
+\section{Additions}
+Friction values and discussion, secant method?
 
 \printbibliography
 
