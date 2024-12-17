@@ -1,17 +1,10 @@
-\documentclass{article}
+% \documentclass{article}
+\documentclass[../ellis_thesis.tex]{subfiles}
 \usepackage{amsmath}
 \usepackage{parskip} % adds a skipped paragraph
-
-\newcommand\Mach{\mbox{\textit{Ma}}}  % Mach number
-\newcommand{\dete}{$\mathrm{dE_{te}}$ }  % Throat Entry Equation
-
-\title{Differential Energy of the Throat Entry vs Differential Pressure}
+\usepackage{appendix}
 
 \begin{document}
-
-\maketitle
-
-\section{Derivation}
 
 Three fundamental equations are used when assessing the behavior of the throat entrance differential energy versus the change in pressure. The three equations are friction-less throat entry differential energy \eqref{dete_nofric}, differential conservation of mass \eqref{diff_mass}, and sonic velocity of a fluid \eqref{sonic_vel}.
 
@@ -44,7 +37,7 @@ dE_{te} = \frac{a^{2}dp}{\rho} + VdV
 \label{dete_sonic}
 \end{equation}
 
-Equation \eqref{dete_sonic} is rewritten by dividing the entire equation by $a^{2}$ and multiplying the change in velocity by $\frac{V}{V}$.
+Equation \eqref{dete_sonic} is rewritten by dividing the entire equation by $a^{2}$ and multiplying the change in velocity by $V/V$.
 
 \begin{equation}
 \frac{dE_{te}}{a^{2}} = \frac{dp}{\rho} + \frac{V^2}{a^2}\frac{dV}{V}

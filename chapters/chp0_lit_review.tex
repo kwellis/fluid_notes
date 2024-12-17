@@ -1,0 +1,48 @@
+% Ellis Masters Project Report % 
+% Required Packages %
+\documentclass[../ellis_thesis.tex]{subfiles}
+\usepackage[margin=1 in]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{parskip} % adds a skipped paragraph
+\usepackage{setspace}
+
+%\ifSubfilesClassLoaded{%
+    %\usepackage[style=ieee, url=false]{biblatex}
+    %\addbibresource{bibliography/jetpump.bib}
+%}{}
+
+
+
+\begin{document}
+\spacing{1.5}
+
+The purpose of this literature review is to explore the historical evolution of jet pump modeling, particularly in the context of oil wells. This development has occurred in two distinct streams: one led by academia, which focused on accurate equations and physical modeling, and the other driven by industry engineers, who prioritized practical, timely solutions. Although both groups advanced jet pump technology concurrently, there was little knowledge exchange between them. Interestingly, despite errors in the industry's early models, these engineers were considered the field experts, and their approach became widely adopted. Only recently have the flaws in their methods been recognized and corrected.
+
+The academic camp is represented by two notable figures: Richard Cunningham, a Professor of Mechanical Engineering at Pennsylvania State University, and Nelson Sanger, a Research Scientist at NASA. Although they did not collaborate directly, they referenced each other's work, pushing forward the understanding of jet pump physics. On the industry side, engineers Hal Petrie, Phil Wilson, and Eddie Smart were key figures, representing the leading oilfield service companies of the time; National Production, Kobe Inc., and Guiberson. Unlike the academics, these engineers worked closely, co-authoring papers and leading projects. Petrie and Wilson, for instance, spent many years as colleagues at Kobe Inc.
+
+The first documented reference to a jet pump comes from Cunningham’s 1954 report, commissioned by the United States Air Force (USAF) \cite{cunn_oil}. Tasked with assessing the viability of jet pumps in auxiliary lube oil systems for aircraft, particularly under challenging conditions like high altitudes and viscosities, Cunningham revised existing jet pump equations. While early equations, such as those from Gustav Flugel in 1939 \cite{flugel}, focused on static pressure, Cunningham simplified the equations by focusing on total head pressures. His equations were widely accepted and are still in use today across various applications.
+
+The first mention of jet pumps in oil wells appears in Kobe Oil Services Companies 1961 book, \emph{Theory and Application of Hydraulic Oil Well Pumps} \cite{kobe_book}. The book primarily discusses subsurface progressive cavity pumps (PCPs), but briefly acknowledges jet pumps: “The jet pump has been proposed for oil field applications and tested to a limited extent.” While PCPs were effective, they struggled with high gas fractions, poor quality power fluid, and corrosive liquids, prompting Kobe Inc. to trial jet pumps in oil wells.
+
+In 1968, Nelson Sanger at NASA conducted significant research on liquid jet pumps, publishing three reports that contributed to a deeper understanding of jet pump physics. One report provided a detailed investigation of jet pump performance under normal conditions, using 18 static pressure gauges along the pump body to develop a one-dimensional equation-based model \cite{sanger_non_cav}. The other two reports focused on cavitation, with Sanger proposing equations to predict the onset of this phenomenon \cite{sanger_cav}. Cunningham later built on Sanger’s work, publishing a 1970 review comparing eight different cavitation models \cite{cunn_cav}. He concluded that the sigma parameter, derived by Hansen and Na, provided the best cavitation correlation. This paper is significant because it solidifies the idea that cavitation was a well understood phenomenon with wide acceptance.
+
+In 1970, Kobe Inc. appointed Phil Wilson to lead a study on oil well jet pumps. The study involved 125 wells and focused on component reliability, efficiency, and gas handling \cite{wilson_status}. Wilson correctly noted that gas choked the jet pump’s throat, yet he attributed performance losses to cavitation. This misunderstanding was reflected in Kobe's software, which predicted cavitation zones but failed to account for gas choking. At the time, cavitation was a primary concern in jet pump research, and no significant research had addressed jet pumps operating with both liquid and vapor phases.
+
+In 1974, Cunningham published two key papers on liquid jets compressing gas in jet pumps. The first paper examined the throat length required for optimal mixing between liquid jets and vapor suction fluid, balancing insufficient mixing with excessive frictional losses \cite{cunn_break}. However, the second paper was more influential, offering detailed equations for modeling two-phase jet pump behavior. Cunningham introduced the concept of sonic choking, accurately predicting performance degradation in two-phase pumps \cite{cunn_gas}. Unfortunately, despite the relevance of this research, it went largely unrecognized by oil service companies.
+
+Hal Petrie contributed to the 1980 classic textbook \emph{Artificial Lift Methods} \cite{kermit}, where he reviewed jet pump technology, but he used outdated 1934 equations by Gosline and O’Brien \cite{gosline} instead of Cunningham’s 1954 dynamic pressure equations. Petrie acknowledged the limitations of the cavitation model, noting that free gas contributed to choking, though the methodology he followed did not adequately address this.
+
+In 1983, Petrie, Wilson, and Smart published a series of three articles in World Oil Magazine that became widely accepted as the definitive model for jet pumps in oil wells, despite being technically incorrect \cite{world_oil_one} \cite{world_oil_two} \cite{world_oil_three}. Their model assumed equal pressure at the suction and throat entrance of the pump, violating the first law of thermodynamics by ignoring the energy transfer required for the velocity increase through a restriction. Nevertheless, their methodology became industry standard and is still used in some modern jet pump analysis software.
+
+Cunningham’s final major contribution came in 1995, when he published a paper on liquid jets with multiphase suction (LJM) pumps \cite{cunn_two}. Although largely theoretical, this work laid the foundation for future jet pump research in oil wells by modeling multiphase flow and highlighting the impact of sonic choking on performance. The paper’s assumptions — ideal gas, incompressible liquids, and no vapor solubility — limited its applicability, but it remains a key reference for understanding multiphase jet pumps.
+
+For two decades, industry relied on the flawed 1983 model. This changed in the early 2000s with the development of the Mangala field in Northern India, a high-porosity, high-permeability sandstone reservoir with flow assurance challenges due to wax formation. Jet pumps were used to manage the oil temperature by circulating heated power fluid. However, the software used to model jet pump performance was inaccurate. In 2015, an in-house assessment tool based on Cunningham’s 1995 methodology reduced the error from 40\% to under 10\% \cite{mangala_critical}. Despite the significant performance improvement, the tool was developed purely in Excel and VBA which made it cumbersome to use.
+
+In 2020, Mangala field researchers published a paper that serves as the basis for the modeling approach in this thesis \cite{mangala_numerical}. They replaced Cunningham’s analytical equations with numerical methods, using Python to model jet pump behavior and incorporating external vertical lift performance curves for pressure drop modeling in the tubing. This numerical approach marked a significant improvement over previous methods, but the paper lacked guidance on selecting the optimal jet pump size. This project aims to build on that work, refining the model and establishing criteria for selecting the right jet pump for specific well conditions.
+
+\ifSubfilesClassLoaded{%
+    \printbibliography}{}
+
+\end{document}

@@ -1,0 +1,288 @@
+%%% UAF Thesis Template %%%
+
+%%%%%%%%%%%%%%%%%% Required Packages %%%%%%%%%%%%%%%%%%
+%% Add packages if necessary for your figures/tables %%
+\documentclass[12 pt]{report}
+\usepackage[margin=1 in]{geometry}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{bigdelim}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{tgtermes}
+\usepackage{lipsum}
+\usepackage{tabto}
+\usepackage{subcaption}
+\usepackage{setspace}
+% \usepackage[round, sort]{natbib}
+% \usepackage[sectionbib]{chapterbib} 
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{tocloft}
+\usepackage{apptools}
+\usepackage{etoolbox}
+\usepackage{indentfirst}
+\usepackage{datetime}
+\usepackage{caption}
+\captionsetup{skip=0pt}
+\usepackage{blindtext}
+\captionsetup{font={normalsize,stretch=1.3}}
+% \usepackage[numbib]{tocbibind}
+
+%% Add your citation and bibliography style here. From applicable journal
+\usepackage[style=ieee, url=false]{biblatex}
+\addbibresource{bibliography/jetpump.bib}
+
+%% Subfiles
+\input{mycommands.tex}
+\usepackage{subfiles}
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% DO NOT MAKE CHANGES IN PREAMBLE OF THIS TEMPLATE %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+  
+%% Function adding only month for date on title page 
+\newdateformat{monthdate}{%
+  \monthname[\THEMONTH] \THEYEAR}
+
+  
+%% Adding chapter and appendix headers to TOC
+\apptocmd{\appendix}
+  {\addtocontents{toc}{%  
+   \protect\renewcommand{\protect\cftchappresnum}{Appendix~}%
+   \protect\settowidth\mylength{\bfseries\protect\cftchappresnum
+   \protect\cftchapaftersnum}%
+   \setlength{\cftchapnumwidth}{6em}}%
+  }{}{}
+\newlength\mylength
+
+%% Formatting for TOC
+\renewcommand{\cftdotsep}{1}
+\renewcommand{\cftchapaftersnum}{:}
+\renewcommand{\cftchapfont}{}
+\renewcommand{\cftchappagefont}{}
+\renewcommand\cftchappresnum{Chapter~}
+\setlength{\cftsecnumwidth}{1.75em}
+\setlength{\cftchapnumwidth}{0.75em}
+\settowidth\mylength{\cftchappresnum\cftchapaftersnum}
+\addtolength\cftchapnumwidth{\mylength}
+\setlength{\cftaftertoctitleskip}{1em}
+\setlength{\cftafterloftitleskip}{1.5em}
+\setlength{\cftafterlottitleskip}{1.5em}
+\renewcommand{\cfttoctitlefont}{\normalsize\bfseries}
+\renewcommand{\cftloftitlefont}{\normalsize\bfseries}
+\renewcommand{\cftlottitlefont}{\normalsize\bfseries}
+\setlength{\cftbeforetoctitleskip}{-1em}
+\setlength{\cftbeforeloftitleskip}{-1em}
+\setlength{\cftbeforelottitleskip}{-1em}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} 
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cfttoctitlefont}{\hfil\normalsize\bfseries}
+\renewcommand{\cftlottitlefont}{\hfil\normalsize\bfseries}
+\renewcommand{\cftloftitlefont}{\hfil\normalsize\bfseries}
+\renewcommand{\cftchappagefont}{\normalfont}
+
+%% Formatting for title spacing
+\titlespacing*{\chapter}{0pt}{-19pt}{\baselineskip}  
+\titlespacing*{\section}{0pt}{\baselineskip}{0pt}
+\titlespacing*{\subsection}{0pt}{\baselineskip}{0pt}
+\titlespacing*{\subsubsection}{0pt}{\baselineskip}{0pt}
+
+%% Formatting titles for the main portion of your thesis
+\titleformat{\chapter}[hang]
+  {\normalfont\normalsize\bfseries\centering}
+  {Chapter \thechapter:}{5pt}{\normalsize}
+
+%% Title spacing formatting  
+\titleformat*{\section}{\bfseries\fontsize{14}{0}}
+\titleformat*{\subsection}{\bfseries\fontsize{10}{0}}
+\titleformat*{\subsubsection}{\bfseries\fontsize{10}{0}}
+
+%% Formatting caption for figures
+\captionsetup{justification=raggedright,singlelinecheck=false}
+\cftsetrmarg{0pt}%
+ 
+\begin{document}
+\spacing{1.5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% Make changes here for title pages %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%% Title Page
+\thispagestyle{empty}
+    \begin{center}
+    %% Insert Title
+      \uppercase{Optimizing Power Fluid in Jet Pump Oil Wells}\\
+      \hfill \break by  \\
+      %% Insert Name
+      Kaelin Ellis\\
+      %% Insert Prior Degrees
+      B.S. Mechanical Engineering, 2012\\
+      \hfill \break
+      %% Change 'Dissertation' to 'Thesis' for Masters Degree
+      A Thesis Submitted in Partial Fulfillment of the Requirements\\ 
+       for the Degree of\\
+      \hfill \break
+      %% Change to 'Master of ...'
+      Master of Science\\
+       in\\
+      %% Degree Program     
+      Petroleum Engineering\\    
+      \  
+         
+      University of Alaska Fairbanks\\
+      May 2025\\
+      \
+ 
+      APPROVED:
+    \end{center}
+\begin{tabbing}
+\hspace{8cm}\=\hspace{1cm}\=\kill
+	 %% Committee and Department Members
+  \> Obadare Awoleke, Committee Chair \\
+  \> Abhijit Dandekar, Committee Member \\
+  \> Ed Bueler, Committee Member \\
+  \> Olanrewaju Oyewola, Committee Member \\
+     %% Department chair
+  \> Abhijit Dandekar, Chair \\
+  \> \> Department of Petroleum Engineering\\
+     %% Department dean
+  \> William Schnabel, Dean\\
+  \> \> College of Engineering and Mines\\
+\end{tabbing}
+  \clearpage
+
+
+
+%%%% Empty page. Grad school requirement
+
+\newpage\null\thispagestyle{empty}\newpage
+\clearpage
+
+%% Starting page numbering
+\pagenumbering{roman}
+\setcounter{page}{3}
+
+%%%% Copyright page. Grad school requirement
+\addcontentsline{toc}{chapter}{Copyright}
+  \vspace*{10\baselineskip}
+  \begin{center}
+    © Copyright by Kaelin Ellis (?)\\
+    All Rights Reserved
+  \end{center}
+  \clearpage
+
+%%%% Dedication page. Optional for all documetns
+\chapter*{Dedication}
+\addcontentsline{toc}{chapter}{Dedication}	
+%% Insert dedication below
+\centerline{To Ossie Bernosky:}
+\hfill
+
+\noindent
+Write as a block (or single paragraph) with no indentation. And exposition? Of go. No upstairs do fingering. Or obstructive, or purposeful. In the glitter. For so talented. Which is confines cocoa accomplished. Masterpiece as devoted. My primal the narcotic. For cine? To by recollection bleeding. That calf are infant. In clause. Be a popularly. A as midnight transcript alike. Washable an acre. To canned, silence in foreign.
+\newpage
+
+%%%% Abstract page 
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+%% Insert abstract below
+\noindent
+Abstract to be less than 300 words. Write as a single block without indentation.  He heard the song coming from a distance, lightly floating over the air to his ears. Although it was soft and calming, he was wary. It seemed a little too soft and a little too calming for everything that was going on. He wanted it to be nothing more than beautiful music coming from the innocent and pure joy of singing, but in the back of his mind, he knew it was likely some type of trap.
+\newpage
+
+%%%% Plain word summary. Optional for all documents
+\chapter*{Plain Word Summary}
+\addcontentsline{toc}{chapter}{Plain Word Summary}
+%% Insert plain word summary below
+\noindent
+Plain word summary to be less than 300 words. Write  as a single block without indentation. The reason behind the chicken's decision to cross the road has been a topic of much speculation and inquiry. The act of crossing the road, which is typically associated with human behavior, has raised questions about the cognitive abilities of chickens and their capacity for decision-making.  Some have posited that the chicken was motivated by a desire to reach the other side of the road, perhaps in search of food or water. Others have suggested that the chicken was attempting to escape from a predator or other perceived threat.  Regardless of the chicken's motivations, the act of crossing the road raises broader questions about the nature of animal behavior and cognition. While some may view the chicken's actions as simple and instinctual, others may argue that the chicken's decision to cross the road reflects a more complex thought process.  Ultimately, the reason behind the chicken's decision to cross the road may never be fully understood. However, the act itself serves as a reminder of the rich and varied world of animal behavior, and the many mysteries that still remain to be explored.
+\newpage
+
+%%%% Acknowledgements page. Optional for all documetns
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}	
+%% Insert dedication below
+\noindent
+Write as a paragraph, or paragraphs, with indentation. I would like to extend my heartfelt thanks to the following entities, without whom this thesis would not have been possible. My alarm clock, for its unwavering commitment to disrupting my dreams at the most inconvenient times, ensuring that I never got too comfortable in my slumber.
+The coffee machine, which faithfully dispensed caffeine on demand, turning me into a jittery, sleep-deprived academic zombie during many late-night writing sessions.
+The endless stream of cat videos on the internet, which, while distracting, provided much-needed moments of respite from the grueling task of researching and writing.
+My neighbor's dog, who barked tirelessly at all hours of the day, serving as a reminder that sometimes life's challenges come in the form of non-human companions.
+The ghost of Albert Einstein, who may or may not have whispered the secrets of the universe to me during my late-night epiphanies. Though his contributions remain unverifiable, I'd like to think I owe him a nod of appreciation.
+Last but not least, the cosmic forces of the universe, for conspiring to bring together this strange amalgamation of elements and events, leading to the creation of this peculiar thesis.
+In conclusion, this thesis is a testament to the unpredictable, bizarre, and at times, maddening journey of academic pursuit. I am grateful for all the oddities and idiosyncrasies that contributed to its completion. I acknowledge the support of the graduate school for a travel grant in Fall 2022. I acknowledge the support of the National Science Foundation under grant 2012345.
+\newpage
+
+%% Table of Contents page
+\renewcommand{\contentsname}{Table of Contents}
+\tableofcontents
+\newpage
+
+
+%% List of figures (code adds word figure and colon in front)
+{%
+\renewcommand*{\addvspace}[1]{}
+\let\oldnumberline\numberline
+\renewcommand{\numberline}[1]{\figurename~\oldnumberline{#1:}}
+\listoffigures%
+}
+\newpage
+
+
+%% List of tables (code adds word tables and colon in front)
+{%
+\renewcommand*{\addvspace}[1]{}
+\let\oldnumberline\numberline
+\renewcommand{\numberline}[1]{\tablename~\oldnumberline{#1:}}
+\listoftables%
+}
+
+\newpage
+
+
+%% Switching page numbering from roman numerals
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%% Beginning of Main Thesis Portion %%%%%%%%%%%%%%%%%%%%%%%%%
+%% File path for general introduction .tex file in same folder
+\chapter{Literature Review}
+\subfile{chapters/chp0_lit_review}
+%% File path for body chapter 1 .tex file in same folder
+\chapter{Jet Pump Model}
+\subfile{chapters/rawr_test}
+
+Hey YOOOO! \cite{cunn_break}
+
+%% File path for body chapter 2 .tex file in same folder
+\chapter{Optimization Scheme}
+
+%% File path for general conclusions .tex file in same folder
+
+
+%% Changing formatting of title for Appendices (Delete following sections 
+%% if not using appendices)
+\titleformat{\chapter}[hang]
+  {\normalfont\normalsize\bfseries\centering}{Appendix \thechapter:}{3 pt}{\normalsize}
+
+%% Start of appendices
+\appendix
+
+%% First appendix text
+\chapter{Differential Energy Derivation}
+\subfile{appendix/sonic_throat_entry}
+
+%% Second appendix text
+\chapter{More Supplemental Material}
+\lipsum[7]
+
+%references
+\printbibliography
+
+\end{document}
